@@ -1,0 +1,7 @@
+[package]
+name = "lunar_cal"
+version = "0.1.0"
+authors = ["ljia <leojia@bu.edu>"]
+
+[dependencies]
+clap = "2.32.0"
