@@ -2,7 +2,7 @@ extern crate clap;
 extern crate chrono;
 
 use chrono::prelude::*;
-use clap::{Arg, App, SubCommand};
+use clap::{Arg, App};
 
 fn main() {
     let matches = App::new("Lunar Calender Calculator")
@@ -15,13 +15,27 @@ fn main() {
              .help("Getting today's lunar date."))
         .get_matches();
 
-    println!("config is presented: {}", matches.is_present("today's date"));
-
-    let (year, mon, day): Box<(i32, u32, u32)> = get_today();
-    println!("Today is year {}, mont {}, day {}.", year, mon, day);
+    if matches.is_present("today's date") {
+        let (year, date) = get_today();
+        println!("Today is year {}, date {}.", year, date);
+    }
 }
 
-fn get_today() -> Box<(i32, u32, u32)> {
+fn get_today() -> (String, String) {
     let today = Local::now();
-    Box::new((today.year(), today.month0(), today.day0()))
+    let t_year = today.year();
+    let t_month = today.month();
+    let t_day = today.day();
+    let t_date_str: String;
+    
+    if t_month < 10 && t_day < 10 {
+        t_date_str = format!("0{}0{}", t_month, t_day);
+    } else if t_month < 10 && t_day >= 10 {
+        t_date_str = format!("0{}{}", t_month, t_day);
+    } else if t_month >= 10 && t_day < 10 {
+        t_date_str = format!("{}0{}", t_month, t_day);
+    } else {
+        t_date_str = format!("{}{}", t_month, t_day);
+    }
+    (t_year.to_string(), t_date_str)
 }
