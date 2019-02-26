@@ -1,4 +1,7 @@
 extern crate clap;
+extern crate chrono;
+
+use chrono::prelude::*;
 use clap::{Arg, App, SubCommand};
 
 fn main() {
@@ -14,5 +17,11 @@ fn main() {
 
     println!("config is presented: {}", matches.is_present("today's date"));
 
+    let (year, mon, day): Box<(i32, u32, u32)> = get_today();
+    println!("Today is year {}, mont {}, day {}.", year, mon, day);
 }
 
+fn get_today() -> Box<(i32, u32, u32)> {
+    let today = Local::now();
+    Box::new((today.year(), today.month0(), today.day0()))
+}
