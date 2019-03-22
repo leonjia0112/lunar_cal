@@ -6,3 +6,4 @@ authors = ["ljia <leojia@bu.edu>"]
 [dependencies]
 clap = "2.32.0"
 chrono = "0.4.6"
+serde_json = "*"
